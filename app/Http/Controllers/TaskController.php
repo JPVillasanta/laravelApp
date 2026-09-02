@@ -17,20 +17,24 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        return Task::create(
-            $request->validate([
-                'title' => 'required|string|max:255',
-            ])
-        );
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        Task::create($validated);
+
+        return back();
     }
 
     public function update(Request $request, Task $task)
     {
-        $task->update([
-            'is_done' => $request->boolean('is_done'),
+        $validated = $request->validate([
+            'is_done' => 'required|boolean',
         ]);
 
-        return $task;
+        $task->update($validated);
+
+        return back();
     }
 
     public function destroy(Task $task)
