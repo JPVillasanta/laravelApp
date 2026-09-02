@@ -33,13 +33,21 @@ export default function Index({ tasks }) {
             <ul>
                 {tasks.map((task) => (
                     <li key={task.id}>
-                        {task.title}
-
-                        <button
-                            onClick={() =>
-                                router.delete(`/tasks/${task.id}`)
+                        <input
+                            type="checkbox"
+                            checked={task.is_done}
+                            onChange={(e) =>
+                                router.patch(`/tasks/${task.id}`, {
+                                    is_done: e.target.checked,
+                                })
                             }
-                        >
+                        />
+
+                        <span>
+                            {task.title}
+                        </span>
+
+                        <button onClick={() => router.delete(`/tasks/${task.id}`)}>
                             Delete
                         </button>
                     </li>
